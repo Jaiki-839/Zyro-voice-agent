@@ -38,8 +38,8 @@
 7. [In-App Settings & First-Run Wizard](#-in-app-settings--first-run-wizard)
 8. [Microsoft Word (.docx) Documentation Suite](#-microsoft-word-docx-documentation-suite)
 9. [Building Standalone .exe from Source](#-building-standalone-exe-from-source)
-10. [Authors, Contributors & Attribution](#-authors-contributors--attribution)
-11. [How to Push & Create a GitHub Release](#-how-to-push--create-a-github-release)
+10. [Author & Developer](#-author--developer)
+11. [Copyright & Anti-Plagiarism Policy](#-copyright-contribution--anti-plagiarism-policy)
 12. [License](#-license)
 
 ---
@@ -284,35 +284,6 @@ python package_release.py
 > 
 > **Copyright © 2026 Jaiki Kushwaha. All Rights Reserved.**  
 > Any unauthorized forks re-published as independent projects, copy-paste clones, or credit infringements will be subject to immediate **DMCA Takedown Notices** and legal copyright enforcement.
-
----
-
-## 🚀 How to Push & Create a GitHub Release
-
-Follow these quick steps to push this codebase to GitHub and publish the installer:
-
-### 1. Push to Your GitHub Repository
-```powershell
-# Rename branch to main
-git branch -M main
-
-# Link your GitHub repository (replace with your username and repo)
-git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/zyro.git
-
-# Push all commits and code
-git push -u origin main
-```
-
-### 2. Create the GitHub Release
-1. Open your repository on GitHub and navigate to **Releases** (right sidebar) ➔ Click **Create a new release**.
-2. Set Tag version: `v1.0.0`.
-3. Set Release title: `ZYRO Voice Agent v1.0.0 — Standalone Desktop Release`.
-4. Copy the release notes from [`CHANGELOG.md`](CHANGELOG.md).
-5. Drag and drop the portable package into the release binaries area:
-   - `dist/ZYRO_v1.0.0_Windows_x64_Portable.zip`
-6. Click **Publish release**.
-
-Anyone around the world can now download ZYRO, extract the package, and enjoy a full desktop voice assistant with a single click!
 
 ---
 
