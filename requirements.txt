@@ -1,0 +1,36 @@
+# ZYRO -- core dependencies
+google-genai>=1.0.0        # Gemini Live API client (official Google GenAI SDK)
+python-dotenv>=1.0.1        # loads .env into environment variables
+sounddevice>=0.4.7          # cross-platform mic capture / audio playback (PortAudio)
+numpy>=1.26.0                # audio buffer handling
+
+# Optional -- only needed for the camera device tools (list_camera_devices/select_camera_device).
+# ZYRO must still run with these absent; devices/cameras.py degrades gracefully.
+opencv-python>=4.9.0.80
+
+# Optional -- only needed if you wire web_search to a real provider in tools/web.py.
+requests>=2.31.0
+
+# Web layer -- read_webpage HTML parsing (tools/web.py)
+beautifulsoup4>=4.12.0     # HTML -> clean text extraction
+lxml>=5.0.0                # fast BS4 parser backend (optional; html.parser used as fallback)
+
+# Windows desktop control + optional SAPI wake detection.
+# Core desktop/browser/media tools use ctypes only and work without pywin32.
+# pywin32 enables SAPI-based local voice wake detection while ZYRO is sleeping.
+# Graceful fallback: ZYRO still works fully without it; text-mode wake always works.
+pywin32>=306; sys_platform == "win32"
+
+# Dev / test
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+
+# Web App Agent V2 -- browser keyboard automation (optional).
+# Used by: tools/discord_web.py, tools/whatsapp_web.py, tools/webapp_nav.py
+# and webapps/browser_adapter.py for Ctrl+K (Discord), Ctrl+F (WhatsApp),
+# and constrained scroll/back/forward/refresh actions.
+# Graceful fallback: if absent, all URL-based tools (Instagram, YouTube, Spotify)
+# still work; only keyboard-based Discord/WhatsApp actions return an
+# "install pyautogui" error message instead of executing.
+pyautogui>=0.9.54; sys_platform == "win32"
+pygetwindow>=0.0.9; sys_platform == "win32"

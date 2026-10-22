@@ -1,0 +1,19 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.venv/
+venv/
+zyro.log
+*.log
+.vscode/
+.idea/
+
+# PyInstaller build artifacts
+build/
+dist/
+
+# User data — never commit memories or profile
+data/user_profile.json
+data/memories.json
