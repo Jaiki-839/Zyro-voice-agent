@@ -6,10 +6,12 @@
 
 <p align="center">
   <b>A Windows-first, privacy-focused autonomous voice AI agent powered by Google Gemini Live.</b><br>
-  Runs as a standalone desktop application with zero terminal, command prompt, or VS Code required.
+  Runs as a standalone desktop application with zero terminal, command prompt, or VS Code required.<br>
+  <b>Created & Developed by <a href="#-author--developer">Jaiki Kushwaha</a></b>
 </p>
 
 <p align="center">
+  <a href="#-author--developer"><img src="https://img.shields.io/badge/Developed%20by-Jaiki%20Kushwaha-8B5CF6.svg?style=flat" alt="Developed by Jaiki Kushwaha"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-10B981.svg" alt="License: MIT"></a>
   <a href="https://microsoft.com/windows"><img src="https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-06B6D4.svg" alt="Platform: Windows"></a>
   <a href="https://python.org"><img src="https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-3B82F6.svg" alt="Python"></a>
@@ -260,14 +262,28 @@ python package_release.py
 
 ---
 
-## 👥 Authors, Contributors & Attribution
+## 👨‍💻 Author & Developer
 
-ZYRO was conceptualized, engineered, and open-sourced to deliver a truly sovereign, privacy-respecting Windows voice assistant:
+**Created and Developed by:** **Jaiki Kushwaha**
+- **Lead Architect & Original Author**: Jaiki Kushwaha
+- **Project**: ZYRO Autonomous Voice AI Agent
+- **Core LLM Backbone**: Google DeepMind Gemini Multimodal Live API
+- **Audio & System Engineering**: PortAudio (`sounddevice`), PyAudio, Windows Win32 API
 
-- **Lead Architecture & Development**: ZYRO Core Engineering Team & Open Source Community Contributors.
-- **Core LLM Technology**: Built on Google DeepMind's Gemini Multimodal Live API.
-- **Audio & System Engineering**: Powered by PortAudio (`sounddevice`), PyAudio, and Windows Win32 API.
-- **Community**: Contributions, issue reports, and tool additions are warmly welcomed by developers worldwide.
+---
+
+## ⚠️ Copyright, Contribution & Anti-Plagiarism Policy
+
+> [!WARNING]
+> ### **YOU CAN CONTRIBUTE VIA PR, BUT YOU CANNOT RE-PUBLISH AS YOUR OWN.**
+> 
+> - ✅ **Contributions Welcome**: You are warmly encouraged to contribute bug fixes, performance optimizations, and new tools via Pull Requests directly to this official repository.
+> - ✅ **Personal & Educational Use**: You are free to download, study, compile, and run ZYRO on your own computer.
+> - ❌ **No Unauthorized Re-uploading / Cloning to Your Own Git**: You are **STRICTLY PROHIBITED** from cloning this codebase and uploading / re-publishing it publicly as your own project or repository on GitHub, GitLab, or any other platform without prior written permission from **Jaiki Kushwaha**.
+> - ❌ **No Plagiarism / Removing Credits**: Stripping, modifying, or hiding the creator credit (**"Developed by Jaiki Kushwaha"**) is a direct violation of international copyright law.
+> 
+> **Copyright © 2026 Jaiki Kushwaha. All Rights Reserved.**  
+> Any unauthorized forks re-published as independent projects, copy-paste clones, or credit infringements will be subject to immediate **DMCA Takedown Notices** and legal copyright enforcement.
 
 ---
 

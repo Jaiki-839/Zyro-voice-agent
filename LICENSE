@@ -1,16 +1,25 @@
-MIT License
+MIT License with Source Ownership & Attribution Terms
 
-Copyright (c) 2026 ZYRO Open Source Project Contributors
+Copyright (c) 2026 Jaiki Kushwaha. All Rights Reserved.
+
+Creator & Lead Developer: Jaiki Kushwaha
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+in the Software for personal and educational use, including the rights
+to use, study, compile, and contribute modifications via pull requests to the
+official upstream repository, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. The above copyright notice, author attribution ("Developed by Jaiki Kushwaha"),
+   and this permission notice shall be prominently included in all copies or
+   substantial portions of the Software.
+
+2. RE-DISTRIBUTION & RE-PUBLISHING RESTRICTIONS:
+   You may NOT clone this repository and re-publish, re-brand, or host it publicly
+   under your own name or organization on GitHub or any other platform without
+   explicit written authorization from Jaiki Kushwaha. Plagiarism, unauthorized
+   re-hosting, or removing the original creator's attribution is strictly prohibited
+   and subject to DMCA takedown notices and intellectual property infringement claims.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

@@ -52,7 +52,7 @@ class ZyroConfig:
     default_camera: str = field(default_factory=lambda: os.getenv("ZYRO_DEFAULT_CAMERA", ""))
 
     # Identity / user profile (all optional — empty string means "not configured")
-    zyro_developer: str = field(default_factory=lambda: os.getenv("ZYRO_DEVELOPER", ""))
+    zyro_developer: str = field(default_factory=lambda: os.getenv("ZYRO_DEVELOPER", "Jaiki Kushwaha"))
     zyro_purpose: str = field(default_factory=lambda: os.getenv("ZYRO_PURPOSE", "Windows-first personal AI assistant"))
     zyro_version: str = field(default_factory=lambda: os.getenv("ZYRO_VERSION", "0.1"))
     user_name: str = field(default_factory=lambda: os.getenv("ZYRO_USER_NAME", ""))
