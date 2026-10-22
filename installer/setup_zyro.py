@@ -1,7 +1,7 @@
 """
 installer/setup_zyro.py -- Graphical Windows Package Installer & Setup for ZYRO.
-Allows anyone downloading ZYRO to install it cleanly to their system, configure
-Gemini API key, select audio devices, and create Desktop and Start Menu shortcuts.
+Allows anyone downloading ZYRO to install it cleanly to their system with one click,
+configure Gemini API key, select audio devices, and create Desktop and Start Menu shortcuts.
 """
 from __future__ import annotations
 
@@ -9,6 +9,7 @@ import os
 import shutil
 import subprocess
 import sys
+import zipfile
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 from pathlib import Path
@@ -47,15 +48,31 @@ class ZyroInstallerApp:
     def __init__(self) -> None:
         self.root = tk.Tk()
         self.root.title("ZYRO Voice Agent — Windows Setup Wizard")
-        self.root.geometry("620x640")
-        self.root.minsize(560, 560)
+        self.root.geometry("620x660")
+        self.root.minsize(560, 580)
         self.root.configure(bg=BG)
 
-        self.source_dir = Path(__file__).resolve().parent.parent
+        # Base dir detection
+        if getattr(sys, "frozen", False):
+            self.source_dir = Path(sys._MEIPASS)
+            self.base_dir = Path(sys.executable).parent
+        else:
+            self.source_dir = Path(__file__).resolve().parent.parent
+            self.base_dir = self.source_dir
 
-        # Default install destination: %LOCALAPPDATA%\ZYRO
+        # Try setting icon if available
+        icon_candidate = self.source_dir / "assets" / "zyro.ico"
+        if not icon_candidate.exists():
+            icon_candidate = self.base_dir / "assets" / "zyro.ico"
+        if icon_candidate.exists():
+            try:
+                self.root.iconbitmap(str(icon_candidate))
+            except Exception:
+                pass
+
+        # Default install destination: %LOCALAPPDATA%\Programs\ZYRO
         local_app_data = os.getenv("LOCALAPPDATA", str(Path.home()))
-        self.dest_dir = Path(local_app_data) / "ZYRO"
+        self.dest_dir = Path(local_app_data) / "Programs" / "ZYRO"
 
         self.api_key_var = tk.StringVar()
         self.dest_var = tk.StringVar(value=str(self.dest_dir))
@@ -84,7 +101,7 @@ class ZyroInstallerApp:
 
         tk.Label(
             title_row,
-            text=" Desktop Installer",
+            text=" Desktop Setup Wizard",
             font=("Segoe UI", 16, "bold"),
             fg=TEXT,
             bg=CARD,
@@ -92,7 +109,7 @@ class ZyroInstallerApp:
 
         tk.Label(
             header,
-            text="Install ZYRO as an open-source, standalone voice assistant for Windows.",
+            text="Install ZYRO Voice Agent on your PC with 1-click desktop integration.",
             font=("Segoe UI", 10),
             fg=MUTED,
             bg=CARD,
@@ -106,7 +123,7 @@ class ZyroInstallerApp:
         card_dest = tk.Frame(body, bg=CARD, padx=16, pady=12, highlightbackground=BORDER, highlightthickness=1)
         card_dest.pack(fill="x", pady=(0, 12))
 
-        tk.Label(card_dest, text="1. Installation Folder", font=("Segoe UI Semibold", 10), fg=TEXT, bg=CARD).pack(anchor="w")
+        tk.Label(card_dest, text="1. Destination Folder", font=("Segoe UI Semibold", 10), fg=TEXT, bg=CARD).pack(anchor="w")
         dest_box = tk.Frame(card_dest, bg=CARD)
         dest_box.pack(fill="x", pady=(6, 0))
 
@@ -143,10 +160,30 @@ class ZyroInstallerApp:
         card_api = tk.Frame(body, bg=CARD, padx=16, pady=12, highlightbackground=BORDER, highlightthickness=1)
         card_api.pack(fill="x", pady=(0, 12))
 
-        tk.Label(card_api, text="2. Gemini API Key Configuration", font=("Segoe UI Semibold", 10), fg=TEXT, bg=CARD).pack(anchor="w")
+        api_header = tk.Frame(card_api, bg=CARD)
+        api_header.pack(fill="x")
+
+        tk.Label(api_header, text="2. Gemini API Key", font=("Segoe UI Semibold", 10), fg=TEXT, bg=CARD).pack(side="left")
+
+        def _open_api_portal():
+            import webbrowser
+            webbrowser.open_new("https://aistudio.google.com/app/apikey")
+
+        tk.Button(
+            api_header,
+            text="🔑 Get Free API Key",
+            font=("Segoe UI", 8),
+            bg="#1E293B",
+            fg="#38BDF8",
+            relief="flat",
+            padx=8,
+            pady=2,
+            command=_open_api_portal,
+        ).pack(side="right")
+
         tk.Label(
             card_api,
-            text="Enter your Gemini API key (from Google AI Studio). Leave empty to use Mock Mode.",
+            text="Enter your Gemini API key from Google AI Studio. Leave empty to use Mock Mode.",
             font=("Segoe UI", 8),
             fg=MUTED,
             bg=CARD,
@@ -166,7 +203,7 @@ class ZyroInstallerApp:
 
         tk.Checkbutton(
             card_api,
-            text="Enable Mock Mode (Simulate actions safely without API charges)",
+            text="Enable Mock Mode (Simulate actions safely without API calls)",
             variable=self.mock_mode_var,
             font=("Segoe UI", 8),
             bg=CARD,
@@ -179,11 +216,11 @@ class ZyroInstallerApp:
         card_opt = tk.Frame(body, bg=CARD, padx=16, pady=12, highlightbackground=BORDER, highlightthickness=1)
         card_opt.pack(fill="x", pady=(0, 12))
 
-        tk.Label(card_opt, text="3. Shortcuts & Launch", font=("Segoe UI Semibold", 10), fg=TEXT, bg=CARD).pack(anchor="w")
+        tk.Label(card_opt, text="3. Shortcuts & Launch Options", font=("Segoe UI Semibold", 10), fg=TEXT, bg=CARD).pack(anchor="w")
 
         tk.Checkbutton(
             card_opt,
-            text="Create Desktop Shortcut",
+            text="Create Desktop Shortcut (Icon on Windows Desktop)",
             variable=self.create_desktop_var,
             font=("Segoe UI", 9),
             bg=CARD,
@@ -194,7 +231,7 @@ class ZyroInstallerApp:
 
         tk.Checkbutton(
             card_opt,
-            text="Create Start Menu Program Group",
+            text="Create Start Menu Shortcut (Search 'ZYRO' in Start Menu)",
             variable=self.create_start_var,
             font=("Segoe UI", 9),
             bg=CARD,
@@ -235,6 +272,7 @@ class ZyroInstallerApp:
             relief="flat",
             padx=20,
             pady=8,
+            cursor="hand2",
             command=self._run_install,
         )
         self.install_btn.pack(side="right")
@@ -254,19 +292,30 @@ class ZyroInstallerApp:
     def _run_install(self) -> None:
         dest = Path(self.dest_var.get().strip())
         self.install_btn.configure(state="disabled")
-        self.status_lbl.configure(text="Installing files...")
-        self.progress_var.set(20)
+        self.status_lbl.configure(text="Preparing installation directory...")
+        self.progress_var.set(15)
         self.root.update()
 
         try:
             dest.mkdir(parents=True, exist_ok=True)
 
-            # Copy dist/ZYRO if built, or copy project folders
+            # Check if portable zip exists in base dir or dist dir
+            zip_candidates = [
+                self.base_dir / "ZYRO_v1.0.0_Windows_x64_Portable.zip",
+                self.source_dir / "dist" / "ZYRO_v1.0.0_Windows_x64_Portable.zip",
+                self.base_dir / "dist" / "ZYRO_v1.0.0_Windows_x64_Portable.zip",
+            ]
+            found_zip = next((z for z in zip_candidates if z.exists()), None)
+
             dist_dir = self.source_dir / "dist" / "ZYRO"
+            if not dist_dir.exists():
+                dist_dir = self.base_dir / "dist" / "ZYRO"
+
             exe_target = None
 
-            if dist_dir.exists():
-                self.status_lbl.configure(text="Copying compiled distribution binaries...")
+            if dist_dir.exists() and (dist_dir / "ZYRO.exe").exists():
+                self.status_lbl.configure(text="Installing application binaries and runtime...")
+                self.progress_var.set(35)
                 self.root.update()
                 for item in dist_dir.iterdir():
                     dst_item = dest / item.name
@@ -277,10 +326,31 @@ class ZyroInstallerApp:
                     else:
                         shutil.copy2(item, dst_item)
                 exe_target = dest / "ZYRO.exe"
-            else:
-                self.status_lbl.configure(text="Copying application source files...")
+
+            elif found_zip:
+                self.status_lbl.configure(text=f"Extracting {found_zip.name}...")
+                self.progress_var.set(40)
                 self.root.update()
-                # Copy source trees
+                with zipfile.ZipFile(found_zip, "r") as zf:
+                    for member in zf.namelist():
+                        # Extract stripping the top 'ZYRO/' folder
+                        parts = Path(member).parts
+                        if len(parts) > 1 and parts[0] == "ZYRO":
+                            rel_path = Path(*parts[1:])
+                        else:
+                            rel_path = Path(member)
+                        target_file = dest / rel_path
+                        if member.endswith("/"):
+                            target_file.mkdir(parents=True, exist_ok=True)
+                        else:
+                            target_file.parent.mkdir(parents=True, exist_ok=True)
+                            with zf.open(member) as src, open(target_file, "wb") as dst:
+                                shutil.copyfileobj(src, dst)
+                exe_target = dest / "ZYRO.exe"
+            else:
+                self.status_lbl.configure(text="Installing application package files...")
+                self.progress_var.set(40)
+                self.root.update()
                 for folder in ["assets", "audio", "core", "devices", "gemini", "memory", "skills", "tools", "ui", "webapps", "docs"]:
                     s = self.source_dir / folder
                     if s.exists():
@@ -294,11 +364,10 @@ class ZyroInstallerApp:
                         shutil.copy2(s, dest / f)
                 exe_target = dest / "launch_zyro.bat"
 
-            self.progress_var.set(60)
-            self.status_lbl.configure(text="Writing configuration (.env)...")
+            self.progress_var.set(70)
+            self.status_lbl.configure(text="Configuring environment settings (.env)...")
             self.root.update()
 
-            # Write .env in dest
             api_key = self.api_key_var.get().strip()
             mock = self.mock_mode_var.get()
             if not api_key:
@@ -314,15 +383,17 @@ class ZyroInstallerApp:
             )
             (dest / ".env").write_text(env_content, encoding="utf-8")
 
-            self.progress_var.set(80)
-            self.status_lbl.configure(text="Creating desktop and start menu shortcuts...")
+            self.progress_var.set(85)
+            self.status_lbl.configure(text="Creating Desktop and Start Menu shortcuts...")
             self.root.update()
 
             icon_path = dest / "assets" / "zyro.ico"
             if not icon_path.exists():
                 icon_path = self.source_dir / "assets" / "zyro.ico"
+            if not icon_path.exists():
+                icon_path = self.base_dir / "assets" / "zyro.ico"
 
-            # Desktop shortcut
+            # 1. Desktop Shortcut
             if self.create_desktop_var.get():
                 desktop = Path.home() / "Desktop"
                 if desktop.exists():
@@ -333,7 +404,7 @@ class ZyroInstallerApp:
                         description="ZYRO - Personal Windows Voice AI Assistant",
                     )
 
-            # Start Menu shortcut
+            # 2. Start Menu Shortcut
             if self.create_start_var.get():
                 appdata = os.getenv("APPDATA")
                 if appdata:
@@ -347,10 +418,17 @@ class ZyroInstallerApp:
                     )
 
             self.progress_var.set(100)
-            self.status_lbl.configure(text="Installation completed successfully!")
+            self.status_lbl.configure(text="Setup complete! Ready to launch ZYRO.")
             self.root.update()
 
-            messagebox.showinfo("Installation Complete", f"ZYRO has been installed to:\n{dest}\n\nShortcuts created on Desktop and Start Menu.", parent=self.root)
+            messagebox.showinfo(
+                "Installation Successful",
+                f"ZYRO has been successfully installed to:\n{dest}\n\n"
+                "✓ Desktop Shortcut created\n"
+                "✓ Start Menu shortcut created\n"
+                "✓ Ready to run!",
+                parent=self.root,
+            )
 
             if self.launch_after_var.get():
                 try:
