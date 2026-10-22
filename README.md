@@ -15,6 +15,7 @@
   <a href="https://python.org"><img src="https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12-3B82F6.svg" alt="Python"></a>
   <a href="tests/"><img src="https://img.shields.io/badge/Tests-409%20Passed-10B981.svg" alt="Tests"></a>
   <a href="docs/"><img src="https://img.shields.io/badge/Docs-5x%20Word%20.docx%20Suite-8B5CF6.svg" alt="Word Docs"></a>
+  <a href="FEATURES.md"><img src="https://img.shields.io/badge/Roadmap-Android%20%26%20Vision-FF6F61.svg" alt="Android Roadmap"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/Version-v1.0.0-F59E0B.svg" alt="Version"></a>
 </p>
 
@@ -23,7 +24,8 @@
 ## Table of Contents
 
 1. [Overview](#-overview)
-2. [Key Features](#-key-features)
+2. [Key Features & Upcoming Android Release](#-key-features)
+   - [Full Features & Android Roadmap Guide (FEATURES.md)](FEATURES.md)
 3. [End-to-End Privacy & Local Security Architecture](#-end-to-end-privacy--local-security-architecture)
 4. [System Architecture](#-system-architecture)
 5. [Installation & Setup](#-installation--setup)
