@@ -40,8 +40,8 @@ def bundle_extra_assets() -> None:
         print(f"Error: {dist_zyro} does not exist!")
         return
 
-    # Copy .env.example, README.md, docs if present
-    for fname in [".env.example", "README.md", "ZYRO_MASTER_PROMPT.md", "launch_zyro.bat", "run_silent.vbs"]:
+    # Copy clean runtime distribution files
+    for fname in [".env.example", "README.md"]:
         src = ROOT / fname
         if src.exists():
             shutil.copy2(src, dist_zyro / fname)

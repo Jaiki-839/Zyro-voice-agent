@@ -12,7 +12,6 @@ project_root = Path(os.path.abspath(SPECPATH))
 
 added_files = [
     (str(project_root / "assets"), "assets"),
-    (str(project_root / "ZYRO_MASTER_PROMPT.md"), "."),
     (str(project_root / ".env.example"), "."),
 ]
 

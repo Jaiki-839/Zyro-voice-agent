@@ -10,6 +10,9 @@ zyro.log
 .vscode/
 .idea/
 
+# Internal master prompt (ignored from repository)
+ZYRO_MASTER_PROMPT.md
+
 # PyInstaller build artifacts
 build/
 dist/

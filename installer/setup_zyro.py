@@ -358,7 +358,7 @@ class ZyroInstallerApp:
                         if d.exists():
                             shutil.rmtree(d)
                         shutil.copytree(s, d)
-                for f in ["app.py", "zyro_app.pyw", "config.py", "launch_zyro.bat", "run_silent.vbs", "ZYRO_MASTER_PROMPT.md", "README.md", "requirements.txt", ".env.example"]:
+                for f in ["app.py", "zyro_app.pyw", "config.py", "launch_zyro.bat", "run_silent.vbs", "README.md", "requirements.txt", ".env.example"]:
                     s = self.source_dir / f
                     if s.exists():
                         shutil.copy2(s, dest / f)
